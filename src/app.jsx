@@ -4,7 +4,6 @@ var Reactfire = require('reactfire');
 var Firebase = require('firebase');
 var rooturl = 'https://glowing-torch-2950.firebaseio.com/'
 var Header = require('./header');
-var List = require('./list');
 
 var App = React.createClass({
   mixins: [Reactfire],
@@ -20,41 +19,18 @@ var App = React.createClass({
     this.fb.on('value', this.handleDataLoaded);
   },
   render: function() {
-    return <div className="row panel panel-default">
-      <div className="col-md-8 col-md-offset-2">
-        <h2 className="text-center">
-          Meet up register
-        </h2>
-        <Header itemsStore={this.firebaseRefs.items} />
-        <hr />
-        <div className={"content " + (this.state.loaded ? 'loaded' : '')}>
-          <List items={this.state.items} />
-          {this.deleteButton()}
+    return <div className="container">
+      <div className="row">
+        <div className="col-md-12">
+            <h2 className="text-center">
+              Let's come together udacious people
+            </h2>
         </div>
       </div>
+      <Header itemsStore={this.firebaseRefs.items} />
+
     </div>
-  },
-  deleteButton: function () {
-    if (!this.state.loaded){
-      return
-    }else {
-      return <div className="text-center clear-complete">
-      <hr />
-      <button
-      type="button"
-      onClick={this.onDeleteDoneClick}
-      className="btn btn-default">
-      clear completed tasks
-      </button>
-      </div>
-    }
-  },
-  onDeleteDoneClick: function () {
-    for(var key in this.state.items){
-      if(this.state.items[key].done===true){
-        this.fb.child(key).remove();
-      }
-    }
+
   },
   handleDataLoaded: function () {
     this.setState({loaded: true})

@@ -1,11 +1,11 @@
 {
-  "name": "react-starter",
+  "name": "meetup_form",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Andreas Daiminger",
   "license": "ISC",
   "dependencies": {
     "browserify": "^9.0.3",
