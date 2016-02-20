@@ -19,7 +19,7 @@ var App = React.createClass({
     this.fb.on('value', this.handleDataLoaded);
   },
   render: function() {
-    return <div className="container">
+    return <div className="container-fluid">
       <div className="row">
         <div className="col-md-12">
             <h2 className="text-center">
