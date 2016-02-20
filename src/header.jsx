@@ -6,14 +6,20 @@ module.exports = React.createClass({
       name: '',
       country: '',
       postalCode: '',
-      distance: ''
+      distance: '',
+      submitted: false,
+      error: false
     }
   },
   render: function(){
+    console.log(this.state.submitted);
     return <div className="input-group">
-      <div className="cont">
+    {this.renderError()}
+    <h4 className={"thanks text-center" + (this.state.submitted ? ' fade' : '')}>
+    thanks for joining. our meetup-vis is comming soon.</h4>
+      <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          Name :
+          name :
         </div>
         <div className="field">
           <input
@@ -23,9 +29,9 @@ module.exports = React.createClass({
           className="form-controle" />
         </div>
       </div>
-      <div className="cont">
+      <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          Country :
+          country :
         </div>
         <div className="field">
           <input
@@ -35,9 +41,9 @@ module.exports = React.createClass({
           className="form-controle" />
         </div>
       </div>
-      <div className="cont">
+      <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          PostalCode :
+          postalCode :
         </div>
         <div className="field">
           <input
@@ -47,9 +53,9 @@ module.exports = React.createClass({
           className="form-controle" />
         </div>
       </div>
-      <div className="cont">
+      <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          distance willing to travel for a meetup in km :
+          distance willing to travel for a meetup (in km) :
         </div>
         <div className="field">
           <input
@@ -59,7 +65,7 @@ module.exports = React.createClass({
           className="form-controle input-distance" />  km
         </div>
       </div>
-      <div className="cont">
+      <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <span className="input-group-btn">
           <button onClick= {this.handleClick}
           className="btn btn-default"
@@ -71,17 +77,29 @@ module.exports = React.createClass({
     </div>
   },
   handleClick: function () {
-  // send value of the text to Firebase
-  this.props.itemsStore.push({
-    name: this.state.name,
-    country: this.state.country,
-    postalCode: this.state.postalCode,
-    distance: this.state.distance,
-    });
-    this.setState({name: ''});
-    this.setState({country: ''});
-    this.setState({postalCode: ''});
-    this.setState({distance: ''});
+  // validate input and send it to Firebase
+    if (this.state.name==='' || this.state.country==='' ||
+      this.state.postalCode==='' || this.state.distance==='' || isNaN(this.state.distance)){
+      this.setState({error:true});
+    }else {
+      this.props.itemsStore.push({
+        name: this.state.name,
+        country: this.state.country,
+        postalCode: this.state.postalCode,
+        distance: this.state.distance,
+        });
+        this.setState({error:false});
+        this.setState({submitted: true})
+    }
+  },
+  renderError: function () {
+    if(this.state.error){
+      return <h4
+      className="error text-center">
+      oohh.. you missed something. please fill out the form correctly</h4>
+    }else {
+      return
+    }
   },
   handleInputStateName: function (event) {
     this.setState({name: event.target.value});
