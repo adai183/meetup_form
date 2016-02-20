@@ -12,14 +12,13 @@ module.exports = React.createClass({
     }
   },
   render: function(){
-    console.log(this.state.submitted);
     return <div className="input-group">
     {this.renderError()}
     <h4 className={"thanks text-center" + (this.state.submitted ? ' fade' : '')}>
     thanks for joining. our meetup-vis is comming soon.</h4>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          name :
+          name : 
         </div>
         <div className="field">
           <input

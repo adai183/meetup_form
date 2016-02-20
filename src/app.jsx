@@ -2,7 +2,7 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Reactfire = require('reactfire');
 var Firebase = require('firebase');
-var rooturl = 'https://glowing-torch-2950.firebaseio.com/';
+var rooturl = 'https://glowing-torch-2950.firebaseio.com/'
 var Header = require('./header');
 
 var App = React.createClass({

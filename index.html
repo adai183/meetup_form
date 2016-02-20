@@ -34,8 +34,19 @@
   </style>
 </head>
 <body>
-  <div class="container">
-
-  </div>
+  <div class="container"></div>
 </body>
 <script src="main.js"></script>
+<script>
+var data;
+var tribeNumber;
+var ref = new Firebase("https://glowing-torch-2950.firebaseio.com/items");
+  ref.on("value", function(snapshot) {
+    data = snapshot.val();
+    tribeNumber = Object.keys(data).length;
+    console.log(tribeNumber + ' fellow udacity geeks have joined so far.');
+    console.log("Tribe data: ", data);
+}, function (errorObject) {
+  console.log("The read failed: " + errorObject.code);
+});
+</script>
