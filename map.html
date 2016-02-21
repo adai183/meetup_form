@@ -17,6 +17,8 @@
 <body>
     <div id="map" style="width: 94%; height: 94vh"></div>
     <script type="text/javascript">
+        var maxDistance = 2000;
+
         var map = L.map('map', {minZoom:2}).setView([30,0], 2);
 
         L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -31,7 +33,13 @@
                 if (data.status === 'OK') {
                     var result = data.results[0];
                     var coords = result.geometry.location;
-                    var marker = L.circle([coords.lat,coords.lng], person.distance * 1000).addTo(map);
+                    console.log(person.distance);
+                    if (person.distance < maxDistance){
+                      var marker = L.circle([coords.lat,coords.lng], person.distance * 1000).addTo(map);
+                    }else {
+                      var marker = L.circle([coords.lat,coords.lng], maxDistance * 1000).addTo(map);
+                    }
+
                     for (var comp in result.address_components) {
                         if (result.address_components[comp].types.indexOf('country') != -1) {
                             marker.bindPopup(person.name + ', '  + result.address_components[comp].long_name);
