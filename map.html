@@ -30,7 +30,6 @@
             $.get(url, function(data) {
                 if (data.status === 'OK') {
                     var result = data.results[0];
-                    console.log(data.results);
                     var coords = result.geometry.location;
                     var marker = L.circle([coords.lat,coords.lng], person.distance * 1000).addTo(map);
                     for (var comp in result.address_components) {

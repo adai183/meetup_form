@@ -15,49 +15,52 @@ module.exports = React.createClass({
     return <div className="input-group">
     {this.renderError()}
     <div className={"thanks text-center" + (this.state.submitted ? ' fade' : '')}>
-      <h4>
+
         thanks for joining. Check out out our meetup map <a href="./map.html">here</a>.
-      </h4>
+      
     </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          name :
+
         </div>
         <div className="field">
           <input
           value={this.state.name}
           onChange={this.handleInputStateName}
           type="text"
+          placeholder="name"
           className="form-controle" />
         </div>
       </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          country :
+
         </div>
         <div className="field">
           <input
           value={this.state.country}
           onChange={this.handleInputStateCountry}
+          placeholder="country"
           type="text"
           className="form-controle" />
         </div>
       </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          postalCode :
+
         </div>
         <div className="field">
           <input
           value={this.state.postalCode}
           onChange={this.handleInputStateCode}
           type="text"
+          placeholder="postal code"
           className="form-controle" />
         </div>
       </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
-          distance willing to travel for a meetup (in km) :
+          distance willing to travel for a meetup :
         </div>
         <div className="field">
           <input
@@ -70,7 +73,7 @@ module.exports = React.createClass({
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <span className="input-group-btn">
           <button onClick= {this.handleClick}
-          className="btn btn-default"
+          className="btn btn-primary"
           type="button">
             join the tribe
           </button>
