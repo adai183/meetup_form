@@ -28,26 +28,14 @@
         var myFirebase = new Firebase("https://glowing-torch-2950.firebaseio.com/items/");
         myFirebase.orderByKey().on("child_added", function(snapshot) {
             var person = snapshot.val();
-            var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=country' + person.country + '|postal_code:' + person.postalCode;
-            $.get(url, function(data) {
-                if (data.status === 'OK') {
-                    var result = data.results[0];
-                    var coords = result.geometry.location;
-                    console.log(person.distance);
-                    if (person.distance < maxDistance){
-                      var marker = L.circle([coords.lat,coords.lng], person.distance * 1000).addTo(map);
-                    }else {
-                      var marker = L.circle([coords.lat,coords.lng], maxDistance * 1000).addTo(map);
-                    }
 
-                    for (var comp in result.address_components) {
-                        if (result.address_components[comp].types.indexOf('country') != -1) {
-                            marker.bindPopup(person.name + ', '  + result.address_components[comp].long_name);
-                            break;
-                        }
-                    }
-                }
-            });
+            if (person.distance < maxDistance){
+              var marker = L.circle([person.lat,person.lng], person.distance * 1000).addTo(map);
+            }else if(person.distance >= maxDistance) {
+              var marker = L.circle([person.lat,person.lng], maxDistance * 1000).addTo(map);
+            }
+            var town = person.town + ' , ' ;
+            marker.bindPopup('<p> ' + person.name + '<br/>' + town + person.country + '</p>');
 
         });
 

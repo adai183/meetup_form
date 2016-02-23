@@ -17,7 +17,7 @@ module.exports = React.createClass({
     <div className={"thanks text-center" + (this.state.submitted ? ' fade' : '')}>
 
         thanks for joining. Check out out our meetup map <a href="./map.html">here</a>.
-      
+
     </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
         <div className="tag">
@@ -29,7 +29,8 @@ module.exports = React.createClass({
           onChange={this.handleInputStateName}
           type="text"
           placeholder="name"
-          className="form-controle" />
+          className="form-controle"
+          />
         </div>
       </div>
       <div className={"cont" + (this.state.submitted ? ' hidden' : '')}>
@@ -82,19 +83,50 @@ module.exports = React.createClass({
     </div>
   },
   handleClick: function () {
+    var self = this;
   // validate input and send it to Firebase
     if (this.state.name==='' || this.state.country==='' ||
       this.state.postalCode==='' || this.state.distance==='' || isNaN(this.state.distance)){
       this.setState({error:true});
     }else {
-      this.props.itemsStore.push({
-        name: this.state.name,
-        country: this.state.country,
-        postalCode: this.state.postalCode,
-        distance: this.state.distance,
-        });
-        this.setState({error:false});
-        this.setState({submitted: true})
+  // call google api
+      var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=country' +  this.state.country + '|postal_code:' + this.state.postalCode;
+      var coords;
+      var town;
+      var country;
+      $.get(url, function(data) {
+           if (data.status === 'OK') {
+              var result = data.results[0];
+              coords = result.geometry.location;
+
+               for (var comp in result.address_components) {
+                   if (result.address_components[comp].types.indexOf('country') != -1) {
+                      country = result.address_components[comp].long_name
+                   } else if (result.address_components[comp].types.indexOf('locality') != -1) {
+                       if ('long_name' in result.address_components[comp]) {
+                          town = result.address_components[comp].long_name;
+                       }
+                   }
+
+               }
+               if (typeof town == 'undefined') {
+                   town = '';
+               }
+           }
+       }).done(function () {
+         self.props.itemsStore.push({
+           name: self.state.name,
+           country: self.state.country,
+           postalCode: self.state.postalCode,
+           distance: self.state.distance,
+           lat: coords.lat,
+           lng: coords.lng,
+           country: self.state.country,
+           town: town
+           });
+           self.setState({error:false});
+           self.setState({submitted: true})
+       })
     }
   },
   renderError: function () {
