@@ -98,6 +98,7 @@ module.exports = React.createClass({
       var country;
       $.get(url, function(data) {
            if (data.status === 'OK') {
+              self.setState({noGoogleMatch:false});
               var result = data.results[0];
               coords = result.geometry.location;
 
@@ -118,8 +119,8 @@ module.exports = React.createClass({
              self.setState({noGoogleMatch:true});
              console.log(url);
            }
-       }).done(function () {
-          if (true) {
+       }).done(function (data) {
+          if (!self.state.noGoogleMatch) {
            self.props.itemsStore.push({
              name: self.state.name,
              country: self.state.country,
