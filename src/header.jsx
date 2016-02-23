@@ -119,7 +119,7 @@ module.exports = React.createClass({
              console.log(url);
            }
        }).done(function () {
-
+          if (!self.state.noGoogleMatch) {
            self.props.itemsStore.push({
              name: self.state.name,
              country: self.state.country,
@@ -133,6 +133,7 @@ module.exports = React.createClass({
              self.setState({error:false});
              self.setState({noGoogleMatch:false});
              self.setState({submitted: true})
+          }
        })
     }
   },
