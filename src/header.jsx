@@ -8,7 +8,8 @@ module.exports = React.createClass({
       postalCode: '',
       distance: '',
       submitted: false,
-      error: false
+      error: false,
+      noGoogleMatch: false
     }
   },
   render: function(){
@@ -91,6 +92,7 @@ module.exports = React.createClass({
     }else {
   // call google api
       var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=country' +  this.state.country + '|postal_code:' + this.state.postalCode;
+      console.log(url);
       var coords;
       var town;
       var country;
@@ -112,20 +114,25 @@ module.exports = React.createClass({
                if (typeof town == 'undefined') {
                    town = '';
                }
+           }else{
+             self.setState({noGoogleMatch:true});
+             console.log(url);
            }
        }).done(function () {
-         self.props.itemsStore.push({
-           name: self.state.name,
-           country: self.state.country,
-           postalCode: self.state.postalCode,
-           distance: self.state.distance,
-           lat: coords.lat,
-           lng: coords.lng,
-           country: self.state.country,
-           town: town
-           });
-           self.setState({error:false});
-           self.setState({submitted: true})
+          if (data.status === 'OK') {
+           self.props.itemsStore.push({
+             name: self.state.name,
+             country: self.state.country,
+             postalCode: self.state.postalCode,
+             distance: self.state.distance,
+             lat: coords.lat,
+             lng: coords.lng,
+             country: self.state.country,
+             town: town
+             });
+             self.setState({error:false});
+             self.setState({submitted: true})
+          }
        })
     }
   },
@@ -134,6 +141,11 @@ module.exports = React.createClass({
       return <h4
       className="error text-center">
       oohh.. you missed something. please fill out the form correctly</h4>
+    }else if(this.state.noGoogleMatch) {
+      return <h4
+      className="error text-center">
+      oohh.. seems we cannot find your address. please check your country and postalcode
+      </h4>
     }else {
       return
     }
