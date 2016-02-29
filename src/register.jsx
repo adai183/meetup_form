@@ -135,7 +135,7 @@ module.exports = React.createClass({
              self.setState({submitted: true});
 
              // Webhook URL
-             var url = 'https://hooks.slack.com/services/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'
+             var url = 'https://hooks.slack.com/services/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'
              // Text to post
              var text = 'A new fellow geek joined the tribe. Welcome ' + self.state.name + ' from ' + town + ' ' + self.state.country + '!  '+ self.state.name + ' is willing to travel ' +  self.state.distance + 'km for a udacity meet up.'
 
