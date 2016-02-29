@@ -20,14 +20,14 @@ var oldDataarr= [];
 var newDataarr= [];
 var compaar = [];
 
-$.getJSON('data/oldData.json')
+$.getJSON('data/glowing-torch-2950-export.json')
 .done(function (data) {
   oldData = data.items;
   for (var key in oldData) {
     oldDataarr.push(oldData[key]);
   }
 
-  $.getJSON('data/late-export.json')
+  $.getJSON('data/lostintrans-export.json')
   .done(function (data) {
     newData = data.items;
     for (var mem in newData) {
@@ -64,12 +64,6 @@ $.getJSON('data/oldData.json')
 
 
   console.log(oldDataarr);
-
-
-
-
-
-
 
 
   });
@@ -114,7 +108,7 @@ var send = function (person) {
           'distance': person.distance
         };
 
-        var messageListRef = new Firebase('https://late.firebaseio.com//items/');
+        var messageListRef = new Firebase('https://lostintrans.firebaseio.com//items/');
         var newMessageRef = messageListRef.push();
         newMessageRef.set(o);
 

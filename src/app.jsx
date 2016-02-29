@@ -4,6 +4,9 @@ var Reactfire = require('reactfire');
 var Firebase = require('firebase');
 var rooturl = 'https://glowing-torch-2950.firebaseio.com/'
 var Header = require('./header');
+var Slack = require('node-slack');
+var slack = new Slack('https://hooks.slack.com/services/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');
+
 
 var App = React.createClass({
   mixins: [Reactfire],

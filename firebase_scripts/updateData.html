@@ -11,8 +11,8 @@ var memberarr = [];
 var myFirebase = new Firebase("https://glowing-torch-2950.firebaseio.com/items/");
 myFirebase.orderByKey().on("child_added", function(snapshot) {
     var person = snapshot.val();
-    person.key = snapshot.key();
-    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=country' + person.country + '|postal_code:' + person.postalCode;
+console.log(person);
+    var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=country' + person.country + '|postal_code:' + person.postalCode + '&language=en';
     $.get(url, function(data) {
         if (data.status === 'OK') {
             var result = data.results[0];
@@ -40,13 +40,13 @@ myFirebase.orderByKey().on("child_added", function(snapshot) {
             'name': person.name,
             'country': country,
             'distance': person.distance,
-            'town' : town,
+            'town' : person.town,
             'postalCode': person.postalCode,
-            'lat': coords.lat,
-            'lng': coords.lng,
+            'lat': person.lat,
+            'lng': person.lng
           };
 
-          var messageListRef = new Firebase('https://late.firebaseio.com/items/');
+          var messageListRef = new Firebase('https://lostintrans.firebaseio.com/items/');
           var newMessageRef = messageListRef.push();
           newMessageRef.set(o);
 

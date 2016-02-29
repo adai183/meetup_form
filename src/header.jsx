@@ -114,7 +114,7 @@ module.exports = React.createClass({
                }
                if (typeof town == 'undefined') {
                    town = '';
-               }
+                }
            }else{
              self.setState({noGoogleMatch:true});
              console.log(url);
@@ -133,7 +133,21 @@ module.exports = React.createClass({
              });
              self.setState({error:false});
              self.setState({noGoogleMatch:false});
-             self.setState({submitted: true})
+             self.setState({submitted: true});
+
+             // Webhook URL
+             var url = 'https://hooks.slack.com/services/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'
+             // Text to post
+             var text = 'A new user joined the tribe. Welcome ' + self.state.name + ' from ' + town + ' ' + self.state.country;
+             $.ajax({
+                data: 'payload=' + JSON.stringify({
+                    "text": text
+                }),
+                dataType: 'json',
+                processData: false,
+                type: 'POST',
+                url: url
+            });
           }
        })
     }
