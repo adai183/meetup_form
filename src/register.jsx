@@ -137,7 +137,7 @@ module.exports = React.createClass({
              // Webhook URL
              var url = 'https://hooks.slack.com/services/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'
              // Text to post
-             var text = 'A new fellow geek joined the tribe. Welcome ' + self.state.name + ' from ' + town + ' ' + self.state.country + '!  '+ self.state.name + ' is willing to travel ' +  self.state.distance + 'km for a udacity meet up'
+             var text = 'A new fellow geek joined the tribe. Welcome ' + self.state.name + ' from ' + town + ' ' + self.state.country + '!  '+ self.state.name + ' is willing to travel ' +  self.state.distance + 'km for a udacity meet up.'
 
              $.ajax({
                 data: 'payload=' + JSON.stringify({

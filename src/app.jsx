@@ -3,7 +3,11 @@ var ReactDOM = require('react-dom');
 var Reactfire = require('reactfire');
 var Firebase = require('firebase');
 var rooturl = 'https://glowing-torch-2950.firebaseio.com/'
-var Header = require('./header');
+var Register = require('./register');
+var ReactRouter = require('react-router');
+var Router = ReactRouter.Router;
+var Route = ReactRouter.Route;
+// Dependencies to send notifications to udacious people Slack channel
 var Slack = require('node-slack');
 var slack = new Slack('https://hooks.slack.com/services/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');
 
@@ -30,7 +34,7 @@ var App = React.createClass({
             </h2>
         </div>
       </div>
-      <Header itemsStore={this.firebaseRefs.items} />
+      <Register itemsStore={this.firebaseRefs.items} />
 
     </div>
 
@@ -39,5 +43,14 @@ var App = React.createClass({
     this.setState({loaded: true})
   }
 });
-var element = React.createElement(App, {});
-ReactDOM.render(element, document.querySelector('.container'));
+
+var routes =(
+  <Router>
+    <Route path="/" component={App}>
+
+    </Route>
+  </Router>
+);
+
+
+ReactDOM.render(routes, document.querySelector('.container'));
